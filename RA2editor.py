@@ -174,6 +174,7 @@ class EntrySet(Frame):
 			Label(self,text=discriptions[name]).pack(side=TOP,fill=X)
 		self.scrollbar = Scrollbar(self,orient=VERTICAL)
 		self.listbox = Listbox(self,yscrollcommand=self.scrollbar.set,selectmode=SINGLE)
+		self.scrollbar.config(command=self.listbox.yview)
 		self.listbox.bind("<<ListboxSelect>>", self.click)
 		self.listbox.pack(side=LEFT, fill=BOTH)
 		self.scrollbar.pack(side=LEFT, fill=BOTH)
