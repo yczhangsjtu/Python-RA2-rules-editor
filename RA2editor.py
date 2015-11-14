@@ -352,6 +352,7 @@ def writeConfigure():
 	vehicleConfig.writeConfigure(rulesets)
 	navalConfig.writeConfigure(rulesets)
 	airforceConfig.writeConfigure(rulesets)
+	weaponConfig.writeConfigure(rulesets)
 	
 def readConfigure():
 	global rulesets
@@ -362,6 +363,7 @@ def readConfigure():
 	vehicleConfig.readConfigure(rulesets)
 	navalConfig.readConfigure(rulesets)
 	airforceConfig.readConfigure(rulesets)
+	weaponConfig.readConfigure(rulesets)
 	
 
 if __name__ == '__main__':
@@ -392,6 +394,8 @@ if __name__ == '__main__':
 	Label(tabNaval, text="Naval settings").pack(side=TOP)
 	tabAirforce = Tab(root, "Airforce")
 	Label(tabAirforce, text="Airforce settings").pack(side=TOP)
+	tabWeapon = Tab(root, "Weapon")
+	Label(tabWeapon, text="Weapon settings").pack(side=TOP)
 	bar.add(tabGeneral)
 	bar.add(tabBuilding)
 	bar.add(tabDefence)
@@ -399,6 +403,7 @@ if __name__ == '__main__':
 	bar.add(tabVehicle)
 	bar.add(tabNaval)
 	bar.add(tabAirforce)
+	bar.add(tabWeapon)
 	bar.show()
 	
 	generalConfig = Configuration(tabGeneral)
@@ -859,5 +864,46 @@ if __name__ == '__main__':
 		defenceConfig.get(defence).get("Immunity").add("Spyable")
 		defenceConfig.get(defence).get("Immunity").add("UnitRepair")
 	defenceConfig.show()
+	
+	weaponConfig = Configuration(tabWeapon)
+	allWeapons = ["OilExplosion","Vulcan2","RedEye2","PrismShot","PrismSupport","GrandCannonWeapon",\
+		"Vulcan","FlakWeapon","CoilBolt","OPCoilBolt","MultipleMindControlTower","M60","M60E","Para",\
+		"ParaE","UCPara","UCElitePara","GoodTeeth","VirtualScanner","DefuseKit","MissileLauncher",\
+		"MissileLauncherE","20mm","20mmE","MakeupKit","MP5","MP5E","Sapper","DoublePistols",\
+		"DoublePistolsE","NeutronRifle","NeutronRifleE","ChronoMP5","ChronoMP5E","FakeC4",\
+		"MindControl","MindControlE","AWP","AWPE","M1Carbine","M1CarbineE","UCM1Carbine",\
+		"UCEliteM1Carbine","ElectricBolt","ElectricBoltE","AssaultBolt","IvanBomber","IvanBomberE",\
+		"AKM","AKME","Flare","Lunarlaser","TerrorBomb","RadBeamWeapon","RadBeamWeaponE",\
+		"RadEruptionWeapon","PsychicJab","PsychicJabE","UCPsychicJab","UCElitePsychicJab","SHOVEL",\
+		"Punch","PunchE","Smash","SmashE","Virusgun","VirusgunE","MindControl","PsiWave",\
+		"SuperMindControl","SuperPsiWave","105mm","105mmE","HoverMissile","HoverMissileE",\
+		"MirageGun","MirageGunE","Comet","SuperComet","20mmRapid","Robogun","SABOT","SABOTE",\
+		"HowitzerGun","DroneJump","FlakTrackGun","FlakTrackGunE","FlakTrackAAGun","FlakTrackAAGunE",\
+		"120mm","120mmE","V3Launcher","120mmx","120mmxE","MammothTusk","20mmRapid","20mmRapidEe",\
+		"TankBolt","TankBoltE","Demobomb","ATGUN","ATGUNE","AGGattling","AGGattlingE","AAGattling",\
+		"AAGattlingE","MagneticBeam","MagneticBeamE","MagneShake","MultipleMindControlTank",\
+		"ChaosAttack","155mm","155mmE","ASWLauncher","SonicZap","SonicZapE","Medusa","MedusaE",\
+		"HornetLauncher","FlakTrackGun","FlakTrackGunE","FlakWeapon","FlakWeaponE","SubTorpedo",\
+		"SubTorpedoE","SquidGrab","SquidGrabE","SquidPunch","SquidPunchE","DredLauncher",\
+		"BoomerTorpedo","BoomerTorpedoE","CruiseLauncher","BlackHawkCannon","BlackHawkCannonE",\
+		"Maverick","MaverickE","ASWBomb","ASWCollision","HornetBomb","HornetBombE","HornetCollision",\
+		"Maverick2","Maverick2E","BlimpBomb","BlimpBombE","DiskLaser","DiskLaserE","DiskDrain",\
+		"ParaDropWeapon"]
+	allWeapons.sort()
+	for weapon in allWeapons:
+		weaponConfig.add(weapon)
+		weaponConfig.get(weapon).add("Usual")
+		weaponConfig.get(weapon).get("Usual").add("Damage")
+		weaponConfig.get(weapon).get("Usual").add("Warhead")
+		weaponConfig.get(weapon).get("Usual").add("Range")
+		weaponConfig.get(weapon).get("Usual").add("MinimumRange")
+		weaponConfig.get(weapon).get("Usual").add("ROF")
+		weaponConfig.get(weapon).get("Usual").add("Speed")
+		weaponConfig.get(weapon).get("Usual").add("Burst")
+		weaponConfig.get(weapon).add("Other")
+		weaponConfig.get(weapon).get("Other").add("Projectile")
+		weaponConfig.get(weapon).get("Other").add("FireInTransport")
+		weaponConfig.get(weapon).get("Other").add("OmniFire")
+	weaponConfig.show()
 	
 	root.mainloop()
