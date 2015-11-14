@@ -1,8 +1,62 @@
 from Tkinter import *
+import tkFileDialog
 
 COMMENT = 0
 RULE = 1
 RULESETNAME = 2
+
+discriptions = {
+	"E1":"American Soldier", "ADOG":"Allied Dog", "ENGINEER":"Allied Engineer",
+	"GGI":"Soldier with Heavy Equipment", "JUMPJET":"Flying Rocket Soldier",
+	"SPY":"Spy", "GHOST":"Nava Seal", "TANY":"Tanya", "CLEG":"Chrono Legion",
+	"CCOMAND":"Chrono Attacker (Special)", "PTROOP":"Psi-Corp Trooper (Special)",
+	"SNIPE":"Sniper", "E2":"Soviet Soldier", "DOG":"Soviet Dog", "FLAKT":"Anti-air soldier",
+	"SHK":"Electric Soldier", "IVAN":"Crazy Ivan", "BORIS":"Elite Soldier", "CIVAN":"Chrono Ivan", 
+	"LUNR": "Lunar Soldier", "TERROR":"Terrorist", "DESO":"Radiation Soldier", "INIT":"Yuri Soldier",
+	"YENGINEER":"Yuri Engineer", "BRUTE":"Violent Man", "VIRUS":"Virus Sniper", "YURI":"Yuri",
+	"YURIPR":"Yuri X", "MTNK":"Grizz Tank", "FV":"Multi-Functional Vehicle", "MGTK":"Mirage Tank",
+	"SREF":"Prism Tank", "BFRT":"Battle Fortress", "AMCV":"Allied Mobile Construction Vehicle",
+	"CMON":"Chrono Miner", "CMIN":"Chrono Miner", "ROBO":"Robot Tank", "TNKD":"Tank Killer",
+	"HOWI":"Howitzer (Special)", "DRON":"Terrifying Robot", "HTK":"Anti-Air Flak Vehicle",
+	"HTNK":"Heavy Tank (Rhinocero Tank)", "V3":"V3 Vehicle", "APOC":"TianQi Tank",
+	"SMCV":"Soviet Mobile Construction Vehicle", "HORV":"Armed Miner", "HARV":"Armed Miner",
+	"UTNK":"UTNK (Special)", "TTNK":"Magnetic Tank", "DTRUCK":"Explosive Truck",
+	"LTNK":"Tornado Tank", "YTNK":"Gattle Tank", "TELE":"Mag-Electric Tank",
+	"MIND":"Mind Control Vehicle", "CAOS":"Soul Attacking Vehicle",
+	"PCV":"Yuri Mobile Construction Vehicle", "SMON":"Slave Miner", "SMIN":"Slave Miner",
+	"LCRF":"Landing Craft", "DEST":"Destroyer", "DLPH":"Dophin", "AEGIS":"Aegis Cruiser",
+	"CARRIER":"Aircraft Carrier", "SAPC":"Armored Transporter", "HYD":"Sea Scorpion",
+	"SUB":"Attacking Submarine", "SQD":"Giant Cuttlefish", "DRED":"Fearless Battleship",
+	"YHVR":"Yuri Transporter", "BSUB":"Yuri Boomer", "SHAD":"BlackHawk Helicopter",
+	"ORCA":"Intruder Fighter Plane", "ASW":"Osprey (Special)", "HORNET":"Hornet (Special)",
+	"BEAG":"Black Eagle", "HIND":"Soviet Helicopter (Special)", "SCHP":"Armed Helicopter",
+	"ZEP":"Kirov Airship", "V3ROCKET":"V3 Rocket (not vehicle)", "DMISL":"Fearless Missile",
+	"CMISL":"Yuri Submarine Missile", "DISK":"Floating Disk", "PDPLANE":"Paratrooper Plane",
+	"CARGOPLANE":"Paratrooper Plane", "GACNST":"Allied Construction Yard",
+	"GAPOWR":"Allied Power Plant", "GAPILE":"Allied Infantry Trainer",
+	"GAREFN":"Allied Ore Refinery", "GAWEAP":"Allied War Factory",
+	"GAAIRC":"Allied Airforce Command Headquarters", "GAYARD":"Allied Shipyard",
+	"GADEPT":"Allied Repair Yard", "GATECH":"Allied Battle Lab", "GAOREP":"Allied Ore Processor",
+	"GAROBO":"Allied Robot Control Center", "NACNST":"Soviet Construction Yard",
+	"NAPOWR":"Soviet Power Plant", "NAHAND":"Soviet Infantry Trainer", "NAREFN":"Soviet Ore Refinery",
+	"NAWEAP":"Soviet War Factory", "NARADR":"Soviet Radar Tower", "NAYARD":"Soviet Shipyard",
+	"NADEPT":"Soviet Repair Yard", "NATECH":"Soviet Battle Lab", "NANRCT":"Soviet Nuclear Reactor",
+	"NAINDP":"Soviet Industrial Plant","YACNST":"Yuri Construction Yard", "YAPOWR":"Yuri Bio Reactor",
+	"YABRCK":"Yuri Infantry Trainer", "YACOMD":"Yuri Command Center (Special)",
+	"YAREFN":"Yuri Ore Refinery", "YAWEAP":"Yuri War Factory", "NAPSIS":"Yuri Psychic Sensor",
+	"YAYARD":"Yuri Shipyard", "YADEPT":"Yuri Service Depot", "YATECH":"Yuri Battle Lab",
+	"YAGRND":"Yuri Grinder", "NACLON":"Yuri Cloning Vats", "CAAIRP":"Tech Airport",
+	"CAOILD":"Tech Oil Derrick", "CAMACH":"Tech Machine Shop", "CATHOSP":"Tech Hospital",
+	"CAHOSP":"Old Civilian Hospital",  "GAWALL":"Allied Wall", "GAPILL":"Allied Pill Box",
+	"NASAM":"Allied Patriot Missile", "ATESLA":"Allied Prism Tower", "GASPYSAT":"Allied Spy Satellite",
+	"GAGAP":"Allied Gap Generator", "GACSPH":"Allied Chrono Sphere",
+	"GAWEAT":"Allied Weather Controller", "AMRADR":"Allied American Airforce Command Headquarters",
+	"GTGCAN":"Allied Giant Cannon", "NAWALL":"Soviet Wall", "NALASR":"Soviet Sentry Gun",
+	"NAFLAK":"Anti-Air Artillery", "TESLA":"Soviet Mega-Electric Coil", "NABNKR":"Soviet Battle Bunker",
+	"NAIRON":"Soviet Iron Curtain Device", "NAMISL":"Soviet Nuclear Missile Silo",
+	"GAFWLL":"Yuri Citadel Wall", "YAGGUN":"Yuri Gattling Cannon", "YAPSYT":"Yuri Psychic Tower",
+	"NATBNK":"Yuri Tank Bunker", "YAGNTC":"Yuri Genetic Mutator Device", "YAPPET":"Yuri Puppet Master"
+}
 
 class RuleSet():
 	def __init__(self, name):
@@ -69,24 +123,30 @@ def getRuleSetName(s):
 def readRulesIni(filename):
 	rulesets = RuleSets()
 	curruleset = None
-	with open(filename) as f:
-		lines = f.readlines()
-	for l in lines:
-		l = l.rstrip('\n').split(';')[0].strip()
-		t = typeOf(l)
-		if t == COMMENT: continue
-		if t == RULESETNAME:
-			name = getRuleSetName(l)
-			curruleset = RuleSet(name)
-			rulesets.addRuleSet(curruleset)
-			continue
-		if t == RULE:
-			curruleset.addRule(l)
+	try:
+		with open(filename) as f:
+			lines = f.readlines()
+		for l in lines:
+			l = l.rstrip('\n').split(';')[0].strip()
+			t = typeOf(l)
+			if t == COMMENT: continue
+			if t == RULESETNAME:
+				name = getRuleSetName(l)
+				curruleset = RuleSet(name)
+				rulesets.addRuleSet(curruleset)
+				continue
+			if t == RULE:
+				curruleset.addRule(l)
+	except:
+		pass
 	return rulesets
 	
 def writeRulesIni(filename,rulesets):
-	with open(filename, 'w') as f:
-		f.write(str(rulesets))
+	try:
+		with open(filename, 'w') as f:
+			f.write(str(rulesets))
+	except:
+		pass
 
 class EntryBox(Frame):
 	def __init__(self,master,name):
@@ -110,6 +170,8 @@ class EntrySet(Frame):
 	def __init__(self,master,name):
 		Frame.__init__(self,master)
 		self.master = master
+		if name in discriptions:
+			Label(self,text=discriptions[name]).pack(side=TOP,fill=X)
 		self.scrollbar = Scrollbar(self,orient=VERTICAL)
 		self.listbox = Listbox(self,yscrollcommand=self.scrollbar.set,selectmode=SINGLE)
 		self.listbox.bind("<<ListboxSelect>>", self.click)
@@ -267,13 +329,15 @@ class TabBar(Frame):
 		
 def	openfile():
 	global rulesets
-	rulesets = readRulesIni("rulesmd.ini")
+	filename = tkFileDialog.askopenfilename()
+	rulesets = readRulesIni(filename)
 	readConfigure()
 	
 def	savefile():
 	global rulesets
 	writeConfigure()
-	writeRulesIni("newrules.ini",rulesets)
+	filename = tkFileDialog.asksaveasfilename()
+	writeRulesIni(filename,rulesets)
 
 def writeConfigure():
 	global rulesets
@@ -283,7 +347,7 @@ def writeConfigure():
 	infantryConfig.writeConfigure(rulesets)
 	vehicleConfig.writeConfigure(rulesets)
 	navalConfig.writeConfigure(rulesets)
-	airfoceConfig.writeConfigure(rulesets)
+	airforceConfig.writeConfigure(rulesets)
 	
 def readConfigure():
 	global rulesets
@@ -757,7 +821,7 @@ if __name__ == '__main__':
 	
 	defenceConfig = Configuration(tabDefence)
 	allDefences = ["GAWALL","GAPILL","NASAM","ATESLA","GASPYSAT","GAGAP","GACSPH","GAWEAT","AMRADR",\
-		"GTGCAN","NAWALL","NALASR","NAFLAK","TESLA","NABNKR","NABNKR","NAIRON","NAMISL","GAFWLL",\
+		"GTGCAN","NAWALL","NALASR","NAFLAK","TESLA","NABNKR","NAIRON","NAMISL","GAFWLL",\
 		"YAGGUN","YAPSYT","NATBNK","YAGNTC","YAPPET"]
 	for defence in allDefences:
 		defenceConfig.add(defence)
