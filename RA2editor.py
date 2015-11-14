@@ -329,14 +329,18 @@ class TabBar(Frame):
 		
 def	openfile():
 	global rulesets
-	filename = tkFileDialog.askopenfilename()
+	options = {'defaultextension':'.ini'}
+	options['filetypes'] = [('all files', '.*'), ('ini files', '.ini')]
+	filename = tkFileDialog.askopenfilename(**options)
 	rulesets = readRulesIni(filename)
 	readConfigure()
 	
 def	savefile():
 	global rulesets
 	writeConfigure()
-	filename = tkFileDialog.asksaveasfilename()
+	options = {'defaultextension':'.ini'}
+	options['filetypes'] = [('all files', '.*'), ('ini files', '.ini')]
+	filename = tkFileDialog.asksaveasfilename(**options)
 	writeRulesIni(filename,rulesets)
 
 def writeConfigure():
