@@ -879,7 +879,7 @@ if __name__ == '__main__':
 		"SuperMindControl","SuperPsiWave","105mm","105mmE","HoverMissile","HoverMissileE",\
 		"MirageGun","MirageGunE","Comet","SuperComet","20mmRapid","Robogun","SABOT","SABOTE",\
 		"HowitzerGun","DroneJump","FlakTrackGun","FlakTrackGunE","FlakTrackAAGun","FlakTrackAAGunE",\
-		"120mm","120mmE","V3Launcher","120mmx","120mmxE","MammothTusk","20mmRapid","20mmRapidEe",\
+		"120mm","120mmE","V3Launcher","120mmx","120mmxE","MammothTusk","20mmRapid","20mmRapidE",\
 		"TankBolt","TankBoltE","Demobomb","ATGUN","ATGUNE","AGGattling","AGGattlingE","AAGattling",\
 		"AAGattlingE","MagneticBeam","MagneticBeamE","MagneShake","MultipleMindControlTank",\
 		"ChaosAttack","155mm","155mmE","ASWLauncher","SonicZap","SonicZapE","Medusa","MedusaE",\
