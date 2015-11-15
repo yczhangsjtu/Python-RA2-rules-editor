@@ -223,6 +223,9 @@ class EntryBox(Frame):
 		self.entry = Entry(self,textvariable=self.var,width=80)
 		self.label.pack(side=LEFT,fill=X)
 		self.entry.pack(side=RIGHT)
+	
+	def addButton(self,name,tabname,config,code):
+		Button(self,text=name,command=lambda:gotoConfig(tabname,config,code)).pack(side=LEFT,fill=X)
 		
 class EntryCollection(Frame):
 	def __init__(self,master,name):
@@ -349,6 +352,7 @@ class EntrySet(Frame):
 			self.get(code).get("Easy").var.set(info[15])
 			self.get(code).get("Medium").var.set(info[16])
 			self.get(code).get("Hard").var.set(info[17])
+			self.get(code).get("Team1").addButton("Goto","TeamTypes",teamtypeConfig,info[1])
 			
 	def writeConfigure(self,rulesets):
 		rulesets.addRuleSet(RuleSet(self.name))
@@ -410,6 +414,13 @@ class Configuration(Frame):
 			name = self.listbox.get(curr[0])
 			self.currset = self.entrysets[name]
 			self.currset.pack(side=LEFT,expand=YES,fill=BOTH)
+	
+	def goto(self,name):
+		for index in range(self.listbox.size()):
+			if self.listbox.get(index) == name:
+				self.listbox.selection_set(index)
+				self.changedSelect()
+				break
 	
 	def readConfigure(self,rulesets):
 		register = rulesets.getRuleSet(self.name)
@@ -516,6 +527,14 @@ def readConfigure():
 	teamtypeConfig.readConfigure(rulesets)
 	scripttypeConfig.readConfigure(rulesets)
 	triggertypeConfig.readConfigure(rulesets)
+	for code in teamtypeConfig.entrysets:
+		entryset = teamtypeConfig.get(code)
+		taskforce = entryset.get("TaskForce").get("TaskForce").var.get()
+		entryset.get("TaskForce").get("TaskForce").addButton(\
+			"Goto","TaskForces",taskforceConfig,taskforce)
+		script = entryset.get("Script").get("Script").var.get()
+		entryset.get("Script").get("Script").addButton(\
+			"Goto","ScriptTypes",scripttypeConfig,script)
 	update()
 
 def update():
@@ -541,6 +560,10 @@ def update():
 		condition += comparator[collection.get("Compare").var.get()]+\
 			collection.get("Value").var.get()
 		collection.setInfo("%s:\nWhen %s:\n%s"%(units,condition,action))
+		
+def gotoConfig(tabname,config,code):
+	bar.switch_tab(tabname)
+	config.goto(code)
 
 if __name__ == '__main__':
 		
