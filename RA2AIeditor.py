@@ -316,7 +316,9 @@ class EntrySet(Frame):
 			
 	def readConfigure(self,rulesets):
 		triggers = rulesets.getRuleSet(self.name)
-		for code in triggers.list:
+		allcodes = [code for code in triggers.list]
+		allcodes.sort()
+		for code in allcodes:
 			detail = triggers.getVar(code)
 			self.add(code)
 			self.get(code).add("Name")
