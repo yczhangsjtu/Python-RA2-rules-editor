@@ -22,7 +22,7 @@ discriptions = {
 	"SMCV":"Soviet Mobile Construction Vehicle", "HORV":"Armed Miner", "HARV":"Armed Miner",
 	"UTNK":"UTNK (Special)", "TTNK":"Magnetic Tank", "DTRUCK":"Explosive Truck",
 	"LTNK":"Tornado Tank", "YTNK":"Gattle Tank", "TELE":"Mag-Electric Tank",
-	"MIND":"Mind Control Vehicle", "CAOS":"Soul Attacking Vehicle",
+	"MIND":"Mind Control Vehicle", "CAOS":"Soul Attacking Vehicle","SENGINEER":"Soviet Engineer",
 	"PCV":"Yuri Mobile Construction Vehicle", "SMON":"Slave Miner", "SMIN":"Slave Miner",
 	"LCRF":"Landing Craft", "DEST":"Destroyer", "DLPH":"Dophin", "AEGIS":"Aegis Cruiser",
 	"CARRIER":"Aircraft Carrier", "SAPC":"Armored Transporter", "HYD":"Sea Scorpion",
